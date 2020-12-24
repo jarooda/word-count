@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react'
 import Header from './Header'
 import Content from './Content'
+import Footer from './Footer'
 
 class Home extends React.Component {
   render() {
@@ -8,6 +9,7 @@ class Home extends React.Component {
       <Fragment>
         <Header />
         <Content />
+        <Footer />
       </Fragment>
     )
   }
