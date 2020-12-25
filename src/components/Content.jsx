@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import Keywords from './Keywords'
+const readingTime = require('reading-time')
 
 class Content extends React.Component {
   state = {
@@ -8,7 +9,8 @@ class Content extends React.Component {
     words: 0,
     sentences: 0,
     paragraphs: 0,
-    keywords: []
+    keywords: [],
+    time: 0.0
   }
 
   gotInput = (event) => {
@@ -35,7 +37,8 @@ class Content extends React.Component {
     }
     let sorted = Object.entries(newKeywords).sort((a,b) => (a[1] < b[1]) ? 1 : ((b[1] < a[1]) ? -1 : 0))
 
-    
+    const stats = readingTime(event.target.value)
+
     if (sorted[0][0] === '') {
       sorted = []
       newCharacters = 0
@@ -49,7 +52,8 @@ class Content extends React.Component {
       words: newWords.length || 0,
       sentences: newSentences.length || 0,
       paragraphs: newParagraphs.length || 0,
-      keywords: sorted
+      keywords: sorted,
+      time: stats.time
     })
   }
 
@@ -77,6 +81,9 @@ class Content extends React.Component {
               </div>
               <div className="mx-2">
     <p className="">Paragraphs:<span className="pl-1">{this.state.paragraphs}</span></p>
+              </div>
+              <div className="mx-2">
+    <p className="">Reading Time:<span className="pl-1">~{Math.ceil(this.state.time / 1000)} sec</span></p>
               </div>
             </div>
             <hr/>
