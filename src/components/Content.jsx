@@ -12,15 +12,18 @@ class Content extends React.Component {
   }
 
   gotInput = (event) => {
-    let textAreaString = event.target.value;
-    textAreaString = textAreaString.replace(/\n\r/g,"<br />");
-    textAreaString = textAreaString.replace(/\n/g,"<br />");
-    let newParagraphs = textAreaString.split('<br />')
-
-    
     let newCharacters = event.target.value.length
-    let newWords = event.target.value.split(' ')
-    let newSentences = event.target.value.split('. ')
+    
+    // ! todo : check regex ((\b[^\s]+\b)((?<=\.\w).)?)
+    // * todo : check regex /\b(\w+)\b/g
+    let newWords = event.target.value.match(/\b(\w+)\b/g) || [[]]
+    
+    // * todo : check regex ([^ \r\n][^!?\.\r\n]+[\w!?\.]+)
+    let newSentences = event.target.value.match(/[^ \r\n][^!?\.\r\n]+[\w!?\.]+/g) || [] //eslint-disable-line
+
+    // * todo : check regex /(.+)((\r?\n.+)*)/gm
+    let newParagraphs = event.target.value.match(/(.+)((\r?\n.+)*)/gm) || []
+    
     const newKeywords = {}
     for (let i = 0; i < newWords.length; i++) {
       const element = newWords[i];
@@ -54,14 +57,14 @@ class Content extends React.Component {
     return (
       <Fragment>
         <div className="grid grid-cols-6 gap-6 container mx-auto lg:mt-6 mt-5 px-3">
-          <section className="md:col-span-4 col-span-6 lg:h-96 h-60 p-3 ring ring-blue-300 rounded-md">
+          <section className="md:col-span-4 col-span-6 md:h-120 h-60 p-3 ring ring-blue-300 rounded-md">
             <textarea
             name="word" id="word"
             placeholder="Insert some text here..."
-            className="resize-none h-full w-full placeholder-gray-800 placeholder-opacity-40 break-all focus:outline-none" autoFocus onChange={this.gotInput}
+            className="resize-none w-full min-h-full border-gray-700 placeholder-opacity-40 break-all focus:outline-none" autoFocus onChange={this.gotInput}
             ></textarea>
           </section>
-          <aside className="md:col-span-2 col-span-6 px-3 rounded-md ring ring-blue-300">
+          <aside className="md:col-span-2 col-span-6 px-3 rounded-md ring ring-blue-300 md:h-120 h-60 overflow-y-auto">
             <div className="py-3">
               <div className="mx-2">
                 <p className="">Characters:<span className="pl-1">{this.state.characters}</span></p>
@@ -77,7 +80,7 @@ class Content extends React.Component {
               </div>
             </div>
             <hr/>
-            <p className="my-3 text-lg">Top Keywords:</p>
+            <p className="my-3 text-lg">Keywords:</p>
             <div className="my-2 flex flex-wrap break-all">
               {
                 this.state.keywords.map((e, idx) => {
