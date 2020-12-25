@@ -1,3 +1,8 @@
+# word-count
+[Link Demo](https://lit-brushlands-22836.herokuapp.com/) <br/>
+This project inspired by [WordCounter](https://wordcounter.net/).
+Open to a new suggestion.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
