@@ -1,5 +1,5 @@
 # word-count
-[Link Demo](https://lit-brushlands-22836.herokuapp.com/) <br/>
+[Link Demo](https://jarooda-word-count.herokuapp.com/) <br/>
 This project inspired by [WordCounter](https://wordcounter.net/).
 Open to a new suggestion.
 
